@@ -1,0 +1,197 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%       Plantilla Informes Isaias Cardenas
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[letterpaper,12pt]{report}
+\usepackage[right=2cm,left=3cm,top=2cm,bottom=2cm,footskip=1.4cm]{geometry}%margenes de la pagina
+
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage[spanish, es-tabla]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{blindtext}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{multicol} %multicolumnas
+\usepackage{subfigure} %incluir multiples imágenes en una figura
+
+% \RequirePackage{hyperref}
+% \RequirePackage{url} %citacion de URL
+% \usepackage{hyperref}
+\linespread{1.5} %interlineado
+
+%borra la palabra "capitulo"
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+ 	{\normalfont\huge\bfseries}{}{0pt}{\Huge}
+\titlespacing*{\chapter}
+ 	{0pt}{10pt}{40pt}
+
+
+\begin{document}
+\renewcommand{\contentsname}{Tabla de Contenido}
+\begin{titlepage}
+\begin{center}
+UNIVERSIDAD DE SANTIAGO DE CHILE\\
+FACULTAD DE INGENIERÍA\\
+DEPARTAMENTO DE INGENIERÍA INFORMÁTICA\\
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[width=2.5cm]{logo.png}
+\end{center}
+\end{figure}
+
+\vspace*{0.7in}
+\begin{Large}
+\textbf{Entrega 3: Sopas de letras} \\
+\end{Large}
+\vspace*{0.3in}
+
+% \rule{80mm}{0.1mm}\\
+\vspace*{2in}
+
+\end{center}
+\begin{flushright}
+
+\begin{tabular}{lll}
+Alumno & : & Isaías Cárdenas\\
+            &   & 18750177-6\\
+Profesor & : & José Allende\\
+Curso & : & Laboratorio métodos de programación\\
+Ayudante & : & Cristian Espinoza\\
+Fecha de entrega & : & 11 de junio de 2017
+\end{tabular}
+\end{flushright}
+\end{titlepage}
+
+\tableofcontents
+
+\chapter{Introducci\'on}
+
+\section {Introducci\'on al problema}
+
+El presente proyecto consiste en crear un programa capaz de identificar palabras en común en 2 sopas de letras diferentes definidas en ficheros de entrada. La sopa de letras utilizada en este proyecto no es la convencional, ya que las palabras no sólo podrán estar en vertical u horizontal si no que las letras pueden estar adyacentes unas de otras en cualquier dirección, esto implica que las letras no pueden estar en diagonal como lo muestra la figura \ref{fig:busquedaEnSopa}, además no se permite utilizar dos veces la misma letra (de la sopa de letras) para estructurar la palabra buscada por lo que la trayectoria de la palabra no se puede intersectar a si misma. Para efectos de este proyecto se define palabra como aquella formada por cuatro letras en la que se intercalan consonantes y vocales, iniciando con una consonante; es decir que según la definición una palabra no puede contener dos consonantes o vocales juntas. Para resolver este problema deberá implementarse similitud de algoritmos, basándose en el proyecto anterior.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.25\textwidth]{busquedaSopa.png}
+    \caption{Ejemplo de cómo se busca una palabra en una sopa de letras}
+    \label{fig:busquedaEnSopa}
+\end{figure}
+
+Las sopas de letras estarán, como se mencionó anteriormente, en 2 ficheros de entrada diferentes y podrán tener cualquier dimensión. Deberá señalarse las palabras encontradas en ambas sopas de letras, para esto se requiere escribir un fichero de salida como lo señala la figura \ref{fig:ficheroSalida}. Se requiere utilizar al menos 3 clases: Una que administre el manejo de archivos, otra que trabaje con las sopas de letras y una clase principal.
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{ficheroSalida.png}
+    \caption{Ejemplo de fichero de salida para el programa}
+    \label{fig:ficheroSalida}
+\end{figure}
+
+\section {Conceptos}
+
+Para una mejor comprensión de éste documento es preciso definir algunos conceptos que
+serán indispensables en éste proyecto:
+
+\begin{description}[align=left]
+\item [Programaci\'on orientada a objetos:] 
+	La programación orientada a objetos es un paradigma de programación que busca emular
+	de manera lógica la realidad o el entorno físico. De esta manera el código de un programa
+	orientado a objetos encapsula elementos, que tienen ciertas características y
+	funcionalidades, utilizando clases. Una clase es la estructura lógica generalizada para
+	objetos con las mismas características y funcionalidades, llamadas atributos y métodos
+	respectivamente. Una instancia particular de una clase es llamada Objeto. En general los
+	métodos son los que utilizan los atributos de una clase para interactuar con otros objetos o
+	bien para realizar una acción en particular.
+
+\item [Lenguaje de programaci\'on Java:]
+	El lenguaje Java es un lenguaje de programación orientado a objetos, este lenguaje utiliza
+	varias clases, predefinidas en él, que interactúan para generar una aplicación. En general
+	los tipos de datos, las entradas y salidas y hasta el bloque principal (main) son utilizados
+	como clases. La mayor ventaja de éste lenguaje de programación es que fue diseñado para
+	que las aplicaciones puedan ejecutarse desde cualquier dispositivo, de manera que no
+	necesiten ser compiladas de nuevo.
+
+\item [Diagramas de flujo:]
+	Los diagramas de flujo representan un algoritmo de procesamiento a través de bloques y
+	flechas, así facilita la comprensión de uno o varios procesos que deben llevarse a cabo para
+	lograr un objetivo en específico. En general la sintaxis de los diagramas de flujo consiste en
+	dos óvalos denotados como el inicio y el fin del algoritmo, rectángulos que representan un
+	proceso específico, rombos que indican bifurcaciones en el proceso general y flechas que
+	relacionan las ilustraciones mencionadas anteriormente.
+\end{description}
+
+\chapter{Descripci\'on del problema}
+
+\section {Descripci\'on del problema}
+
+Dicho lo anterior se observa que el problema planteado se asemeja al del proyecto anterior (entrega 2), pero esta vez no se tiene un archivo de entrada para buscar las palabras. Dado que hay que encontrar las palabras contenidas en ambas sopas de letras es necesario buscar palabras existentes en una sopa primero, y luego determinar si en la segunda sopa se encuentran o no las palabras encontradas en la primera. De esta manera es posible reutilizar el algoritmo anteriormente utilizado. Los ficheros de entrada son similares a los de la figura \ref{fig:ficherosEntrada}
+
+\begin{figure}[h]
+ \centering
+  \subfigure[sopa1.in]{
+   \label{f:entrada1}
+    \includegraphics[width=0.3\textwidth]{sopa1.png}}
+  \subfigure[sopa2.in]{
+   \label{f:entrada2}
+    \includegraphics[width=0.39\textwidth]{sopa2.png}}
+ \caption{Ejemplos de ficheros de entrada para el programa}
+ \label{fig:ficherosEntrada}
+\end{figure}
+
+Cabe destacar que una palabra es valida solo si inicia en una consonante, la segunda letra debe ser una vocal, la tercera una consonante y debe terminar en vocal; a partir de estas restricciones se puede determinar si la siguiente letra en la palabra es o no vocal según su largo, de manera que si el largo es par la letra que sigue debe ser una consonante y del mismo modo si el largo de la palabra es impar la letra que sigue es una vocal. La restricción se mantiene hasta que la palabra tenga largo 4.
+
+Luego de encontrar las palabras existentes en la primera sopa solo queda determinar cual de ellas esta presente en la segunda sopa de letras, algoritmo que fue implementado en el proyecto anterior (entrega 2), finalmente se determinan las palabras encontradas en la segunda sopa de letras para escribir el archivo de salida.
+
+\chapter{Descripci\'on de la soluci\'on}
+
+Se almacenarán las sopas de letras en una matrices creadas con ArrayList<String> de manera que se puedan recorrer carácter por carácter, se almacenarán las palabras existentes en otro ArrayList<String> para recorrerlas una por una y buscarlas dentro de la segunda sopa de letras. Se buscarán consonantes dentro de la primera sopa, ya que una palabra valida comienza con una consonante, y cada vez que se encuentren se utilizará un algoritmo recursivo para buscar las palabras validas que inician con esta letra implementando el método Búsqueda por espacio de estados. Éste algoritmo se apoyará en una pila que contiene los estados activos (posibles soluciones) y se irán extrayendo estados desde la pila para realizar una búsqueda en profundidad. Luego de este proceso se implementará similitud débil basándose en el proyecto anterior (entrega 2), de manera que se busquen palabras en la segunda sopa de letras a partir del listado de palabras encontradas en la primera sopa. Las palabras encontradas en la segunda sopa de letras serán las que se escribirán en el fichero de salida ya que están presentes en ambas sopas.
+	
+\section{Diagrama de clases}
+
+Las clases que interactúan en esta implementación son las siguientes:
+
+\begin{description}[align=left]
+\item [FileManager:]
+	Es la clase que administra los ficheros que se leerán y se escribirán, si el archivo de salida no existe la clase lo crea con el contenido correspondiente.
+\item [LetterSoup:]
+	Ésta clase se encarga de manipular las sopas de letras para buscar las palabras, ya sea se soliciten o no. Implementa el método Búsqueda en espacio de estados de manera recursiva y similitud débil basado en el algoritmo del proyecto anterior.
+\item [Application:]
+	La clase Application relaciona las dos clases mencionadas anteriormente, instancia un objeto FileManager y dos objetos LetterSoup (uno para cada sopa) para realizar los objetivos de éste programa.
+\item [Index:] 
+	La clase Index es la clase principal (main), en ella se instancia un objeto Application y para realizar la funcionalidad de este proyecto.
+\end{description}
+
+La interacción de estas clases se ilustran en la figura \ref{fig:diagramaClases}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{diagramaClases.png}
+    \caption{Diagrama de las clases que interactuan en el programa}
+    \label{fig:diagramaClases}
+\end{figure}
+
+\section{Diagrama de flujo}
+
+La funcionalidad principal se centra en el método searchWord de la clase LetterSoup que fue implementado con similitud débil basado en el algoritmo del método depthFirstSearch, realiza una búsqueda en profundidad de manera recursiva para buscar las palabras existentes en una sopa de letras (según la definición de palabra entregada). La búsqueda se realiza de manera similar a la del proyecto anterior, se genera una pila que guardará los Strings de las direcciones adyacentes para buscar la siguiente letra además del String "back" que servirá para realizar el backtraking en caso de que se haya escogido la dirección equivocada, en el fondo de la pila se guarda el String "notFound" que indica que la palabra no ha sido encontrada. Se extraen las direcciones desde la pila para buscar la letra correspondiente y encaso de que ese extraiga el String "back" se regresará a la posición anterior y se buscará en otra dirección, cada vez que cambia la letra a buscar se agregan nuevas direcciones y un "back". Cuando se encuentra la letra se ingresa nuevamente al método para buscar la letra que sigue, el  proceso se repite hasta que la pila esté vacía. Se agrega la condición de que cada vez que la palabra tenga largo 4, se almacena en el ArrayList<String> words, se remueve la ultima letra y se continua buscando.
+
+Cuando la pila esta vacía se habrán recorrido todas las combinaciones posibles a partir de una consonante y las palabras encontradas estarán en el ArrayList<String> words. Se inicia el proceso nuevamente con la siguiente consonante en la sopa de letras hasta haber recorrido toda la sopa.
+
+Luego de generar una lista con las palabras existentes en la primera sopa de letras, se buscan las palabras en la segunda sopa a partir del listado generado. Como se mencionó anteriormente las palabras encontradas en la segunda sopa de letras serán las que estén presentes en ambas sopas por lo que serán enviadas al archivo de salida.
+
+El proceso descrito se ilustra en el diagrama de flujo de la figura \ref{fig:diagramaFlujo}.
+
+\begin{figure}[p]
+    \centering
+    \includegraphics[width=1\textwidth]{diagramaFlujo.png}
+    \caption{Diagrama del flujo del programa}
+    \label{fig:diagramaFlujo}
+\end{figure}
+
+\chapter{Conclusiones}
+
+Se cumplen los objetivos propuestos y los requerimientos solicitados en el plazo estipulado. Aunque el proyecto requería mas tiempo para poder realizarse, la implementación de similitud débil simplificó muchas tareas, solo se tuvieron que hacer unas pequeñas modificaciones en el método principal lo que da cuenta de lo importante que es la reutilización de código en este método. Las adaptaciones de los métodos de las clases fueron rápidas ya que el código anterior no fue escrito hace mucho lo que facilitó la generación de nuevas ideas y mejoras. Se adjuntan 5 ejemplos con diferentes archivos de entrada que reflejan el resultado esperado de este proyecto.
+
+\end{document}
