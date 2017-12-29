@@ -1,0 +1,247 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%       Plantilla Informes Isaias Cardenas
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[letterpaper,12pt]{report}
+\usepackage[right=2cm,left=3cm,top=2cm,bottom=2cm,footskip=1.4cm]{geometry}%margenes de la pagina
+
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage[spanish, es-tabla]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{blindtext}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{listings} % escribir codigo
+\usepackage{algpseudocode} % escribir algoritmos
+\graphicspath{ {./images/} }
+\usepackage{multicol} % multicolumnas
+% \usepackage{subfigure} % incluir multiples imágenes en una figura
+\usepackage{float} % poscicionar imagenes
+
+% \RequirePackage{hyperref}
+% \RequirePackage{url} %citacion de URL
+% \usepackage{hyperref}
+\linespread{1.5} %interlineado
+
+%borra la palabra "capitulo"
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+    {\normalfont\huge\bfseries}{}{0pt}{\Huge}
+\titlespacing*{\chapter}
+    {0pt}{10pt}{40pt}
+    
+\setlength\parindent{0pt} %tamaño indentacion
+\renewcommand{\contentsname}{Tabla de Contenido}
+
+
+\begin{document}
+
+\begin{titlepage}
+
+\begin{picture}(0,0)(100,10)
+    \put(100,-85){\includegraphics[scale=0.3]{logo.png}}
+\end{picture}
+
+\begin{center}
+    \bf{UNIVERSIDAD DE SANTIAGO DE CHILE\\
+    FACULTAD DE INGENIERÍA\\
+    DEPARTAMENTO DE INGENIERÍA INFORMÁTICA}\\
+\end{center}
+
+\begin{center}
+    \vspace{4cm}
+    \begin{Large}
+    \textbf{Entrega 3: Paradigma Lógico} \\
+    \end{Large}
+    \vspace{6cm}
+\end{center}
+
+\begin{flushright}
+
+\begin{tabular}{lll}
+Alumno & : & Isaías Cárdenas\\
+Rut & : & 18750177-6\\
+Profesor & : & Luis Celedón\\
+Curso & : & Paradigmas de programación\\
+Ayudante & : & Christian Vidal\\
+% Fecha de entrega & : & 30 de agosto de 2017
+\end{tabular}
+\end{flushright}
+\begin{center}
+        \vspace{3cm}
+        \Today
+    \end{center}
+\end{titlepage}
+
+% \tableofcontents
+% \listoffigures
+% \listoftables
+
+\chapter{Introducción}
+
+La búsqueda de información en una base de datos, proceso también conocido como sistema de recuperación de información, es la tarea más utilizada en proyectos del ámbito informático por lo que es esencial que un ingeniero en informática conozca como se lleva a cabo este procedimiento. En la asignatura Paradigmas de programación se les ha requerido a los alumnos que simulen un sistema de recuperación de información utilizando diferentes lenguajes de programación que se rijan por distintos paradigmas con el fin de comprender las ventajas y desventajas de múltiples paradigmas de programación.
+
+El presente documento es la tercera entrega de los cuatro proyectos que componen las evaluaciones del laboratorio para la asignatura Paradigmas de programación. Como se menciona en el párrafo anterior cada laboratorio se enfoca en el mismo problema sin embargo la solución propuesta por parte del alumno debe estructurarse según el paradigma que se trabaje, en este caso se realizará en el paradigma Lógico utilizando el lenguaje SWI-Prolog, versión código abierto de Prolog.
+
+\section {Objetivo general}
+
+Los sistemas de recuperación de información facilitan el acceso y filtro de información en conjunto de datos amplios por lo que es necesario que el alumno al finalizar este laboratorio maneje en totalidad el uso de los sistemas de recuperación de información. Además se estudia el paradigma de programación lógico por lo que el alumno debe comprender a cabalidad el lenguaje de programación SWI-Prolog.
+
+\vspace{2cm} 
+
+\section {Objetivos específicos}
+
+Para efectos de esta entrega el alumno debe:
+
+\begin{itemize}
+    \item Precargar listado de palabras StopWords, la colección de documentos y el índice invertido como base de conocimientos para el intérprete Prolog.
+
+    \item Implementar el predicado ``singleTermQuery'' con el que el usuario podrá determinar los ids de los documentos que contengan una palabra en específico.
+
+    \item Implementar el predicado ``bestMatch'' con el que el usuario podrá determinar los ids de los documentos que contengan al menos una palabra de cierta frase.
+
+    \item Implementar el predicado ``exactMatch'' con el que el usuario podrá determinar los ids de los documentos que contengan una frase en específico, ignorando las palabras StopWords.
+
+    \item Implementar el predicado ``documents'' con el que el usuario podrá determinar el título de ciertos documentos a través de sus ids.
+
+    \item Implementar el predicado ``numDocuments'' con el que el usuario podrá determinar la cantidad de documentos presentes en una lista.
+
+\end{itemize}
+
+
+\chapter{Descripción del problema}
+
+El proyecto consiste en crear un programa que simule un sistema de recuperación de información, similar al que usan los buscadores web en la actualidad. El buscador debe implementar un sistema de indexación para clasificar y ordenar las palabras de diferentes documentos en los que la información será buscada, además se debe realizar un sistema de ranking que decidirá qué documento es mejor resultado que otro en una búsqueda específica. El alumno debe considerar que no todas las palabras formarán parte de la búsqueda, las palabras que deben ser ignoradas se denominan ``StopWords''. Para implementar este programa el alumno debe utilizar el lenguaje de programación SWI-Prolog.
+
+La colección de documentos debe definirse como base de conocimiento para el intérprete de Prolog y debe contener la siguiente información: `` id '' indica el número que identifica a un documento, este indicador es único por lo que no pueden existir dos documentos con el mismo id. `` título '' frase que simboliza al contenido del documento, generalmente las primeras 2 líneas. `` autores '' representa a el o los autores del contenido del documento. `` bibliografía '' es un ejemplo de bibliografía para el texto, contiene la información que generalmente solicita el formato APA. `` texto '' es la sección que representa el contenido del texto o documento, puede separarse en párrafos tal como un texto normal. Las StopWords son un listado de palabras que deben ser ignoradas en las entradas de búsqueda y también deben estar precargadas al igual que el índice invertido.
+
+Dado que la información mencionada debe estar precargada los predicados requeridos en los objetivos específicos pueden implementarse por separado, lo cual facilita el desarrollo de este proyecto.
+
+\chapter{Descripción de la solución}
+
+Para concretar las funcionalidades de este proyecto, el problema general se divide en subproblemas puntuales mas básicos que en conjunto solucionan y permiten la realización total del proyecto. Para ello se requieren técnicas y herramientas de la informática, en este caso orientadas al lenguaje SWI-Prolog, que darán paso a diferentes algoritmos que logran el correcto funcionamiento del sistema de recuperación de información.
+
+\section {Marco teórico}
+
+Para una mejor comprensión de la descripción de la solución es preciso definir algunos conceptos que
+serán indispensables en éste proyecto:
+
+\begin{description}[align=left]
+
+\item [Programación declarativa:]
+    La programación declarativa es una forma de programación que se basa en desarrollar programas declarando proposiciones o afirmaciones que se rigen por condiciones. No queda expresamente especificado en el código como se obtienen los resultados de las funcionalidades si no que el código describe los procedimientos y qué es lo que el codificador esta buscando.
+
+\item [Programación lógica:] 
+    La programación lógica es un paradigma de programación que se basa en la programación declarativa y en el uso de la lógica de primer orden. A diferencia de la programación imperativa, en la programación lógica no se realizan modificaciones o mutaciones a las variables si no que se establecen relaciones entre los predicados buscando proposiciones verdaderas.
+
+\item [Lenguaje de programación SWI-Prolog:]
+    El lenguaje SWI-Prolog es un lenguaje de programación lógico declarativo derivado de el lenguaje Prolog en su implementación de código abierto. La plataforma de SWI-Prolog ofrece una serie de herramientas que incluyen IDE, librerías, GUI, etc necesarias para trabajar con este lenguaje de programación en plataformas Unix, Windows y Macintosh.
+
+\item [Predicados:]
+    Los predicados constituyen a las estructuras básicas en la lógica de primer orden, se refieren a funciones que son evaluadas para formar proposiciones, orientadas al lenguaje SWI-Prolog se buscan que éstas sean verdaderas.
+
+\item [Cláusulas de Horn:]
+    Las cláusulas de Horn son fórmulas lógicas utilizadas para representar una implicancia entre predicados, de esta manera se puede simbolizar una función en el lenguaje SWI-Prolog utilizando cláusulas de Horn.
+
+\item [Base de conocimientos:]
+    Una base de conocimiento orientado al lenguaje de programación SWI-Prolog es un conjunto de proposiciones consideradas verdaderas por lo que el sistema puede realizar consultas o gestionar la información por medio de predicados. 
+
+\end{description}
+
+\section {Aspectos de implementación}
+
+Para lograr la completa implementación de este proyecto se hizo uso de diferentes herramientas y técnicas que serán detallas en esta sección. Primeramente se describe la estructura del entorno del directorio que se le dieron a los archivos que conforman la solución del proyecto:
+
+En el directorio raíz del proyecto se encuentra una carpeta nombrada ``src'' abreviado de source, en la que se encuentran los siguientes archivos:
+
+\begin{description}
+
+    \item [stopwords.pl:]
+        En este archivo se encuentra la definición de la base de conocimiento correspondiente a las StopWords requerida en los objetivos específicos.
+
+    \item [testcollection.pl:]
+        En este archivo se encuentra la definición de la base de conocimiento correspondiente a la lista de documentos o colección de documentos requerida en los objetivos específicos.
+
+    \item [indice.pl:]
+        En este archivo se encuentra la definición de la base de conocimiento correspondiente al índice invertido requerida en los objetivos específicos.
+
+    \item [buscador.pl: ]
+        En este archivo se encuentran las definiciones de los predicados que realizan las funcionalidades del programa, corresponden a los predicados requeridos en los objetivos específicos, además en este archivo se importan las bases de conocimientos descritas anteriormente para realizar las consultas pertinentes.
+
+\end{description}
+
+Estos archivos conforman al código fuente de la implementación de la solución del proyecto y en conjunto satisfacen los requerimientos básicos de éste.
+
+Por otro lado la recursión es vital en este paradigma ya que no están definidos los procesos iterativos, principalmente se utilizan un tipo de recursión en la implementación del sistema de recuperación de información:
+
+\begin{description}
+
+    \item [Recursión Lineal:]
+        La recursión lineal es el tipo más básico de recursión, consiste en una llamada a una función dentro de su propia definición de manera que los retornos de esta se van acumulando en forma de pila. Generalmente se utilizará para emular iteraciones.
+
+\end{description}
+
+\vspace {3cm}
+
+\section {Descripción de la solución}
+
+Con toda la información mencionada se procede a realizar las implementaciones de los predicados requeridos:
+
+\begin{description}
+
+    \item [singleTermQuery:]
+        Dado que la consulta se realiza en base a una palabra o término la implementación de este predicado se reduce a una consulta a la base de conocimiento del índice invertido considerando que si la palabra no es encontrada dentro del índice el resultado es una lista vacía.
+
+    \item [bestMatch:]
+        Utilizando el predicado anterior se acumulan las listas resultados de cada palabra dentro de la lista ``Phrase'' obteniendo una unión de los conjuntos resultado. Dado que el resultado para una consulta en la que la palabra es StopWord es una lista vacía, no afectará al unirlo con los resultados anteriores.
+
+    \item [exactMatch:]
+        Realizando un proceso similar al anterior se procede a obtener los resultados para cada palabra dentro de la lista ``Phrase'', sin embargo para este predicado se intersectan los resultados para obtener los documentos que contienen todas las palabras en la frase. Si la palabra a consultar es StopWord se realiza una unión de resultados para no alterar el resultado final.
+
+    \item [documents:]
+        Teniendo una lista de las ids de los documentos resultados se realiza una consulta de cada uno de ellos en la base de conocimiento de la colección de documentos almacenando en variables temporales sólo el título y la id de los documentos y acumulando esta información en una lista.
+
+    \item [numDocuments:]
+        Básicamente esta implementación se reduce a obtener el largo de la lista de documentos resultados mediante la función ``length'' nativa del lenguaje SWI-Prolog.
+
+\end{description} 
+
+\section {Análisis Comparativo}
+    
+Realizando un análisis comparativo en relación a los otros paradigmas trabajados para este proyecto se observa que:
+
+\begin{itemize}
+
+    \item En relación a la extensión del código SWI-Prolog permite bastante una codificación bastante compacta a diferencia de Racket y evidentemente ANSI-C ya que el paradigma lógico deriva de la programación descriptiva.
+
+    \item Con respecto al tiempo de ejecución del programa se logra un tiempo de respuesta relativamente normal a diferencia del paradigma funcional que requiere de mucha recursión lo cual necesita mas memoria y por ende aumenta el tiempo de respuesta.
+
+    \item En cuanto a la codificación, el hecho de tener que definir la base de conocimiento ``a mano'' provoca que la escritura del código sea mas tediosa. El código resulta mas eficiente si la información pudiese ser extraída desde un archivo de texto.
+
+    \item Se observa que en cuanto a los sistemas o funcionalidades de inferencia el paradigma lógico resulta eficiente tanto en codificación y tiempo de respuesta, sin embargo no permite automatización de procedimientos como la lectura o escritura de archivos.
+
+\end{itemize}
+    
+
+\chapter{Conclusiones}
+
+Se cumplen los objetivos propuestos y los requerimientos solicitados en el plazo estipulado, la separación de código en diferentes archivos facilita la modulación del proyecto teniendo un entorno de trabajo más organizado lo que facilita la lectura del código tanto al alumno como a quien revise la implementación propuesta. 
+
+A diferencia de la implementación anterior (Racket) no se hizo uso de un IDE para programar si no que se codifica en un editor de texto a preferencia y se compila y ejecuta utilizando un intérprete, lo que facilita al alumno ya que es posible usar un entorno personalizado y ad hoc al programador.
+
+El paradigma imperativo crea una programación extensa puesto que es necesario implementar paso a paso cada procedimiento de la implementación, en cambio en el paradigma lógico declarativo de SWI-Prolog el código describe los procedimientos en base a las funciones declarativas ya definidas en el lenguaje(append, length, intersection, etc) lo que crea una programación más reducida ya que no hay que definir todos los procedimientos. Por otro lado el uso reiterativo de recursión en el paradigma funcional implica un uso excesivo de memoria lo que minimiza el paradigma lógico ya que los procesos automatizables (como la recopilación de información), que son los que requieren de mayor recursión o iteración, son reemplazados por la definición de bases de conocimiento.
+
+Las estructuras de datos definidas, como las listas, y la tipificación débil del lenguaje SWI-Prolog facilita la implementación de la solución para el proyecto puesto que solo hay que hacer uso de ellas, ésto en comparación con el lenguaje C es bastante eficiente ya que el tiempo empleado para definir estas estructuras es considerablemente alto en contraste a la implementación de la solución en si. Adicionalmente cabe destacar que el lenguaje lógico declarativo mantiene cada procedimiento encapsulado lo que evita daños colaterales entre predicados, similar al paradigma funcional, lo que hace mas sencilla la implementación y lo que también permite programar los procedimientos por separado sin necesidad de requerir a una antes del otro.
+
+%bibliografía
+
+% https://es.wikipedia.org/wiki/Programaci%C3%B3n_l%C3%B3gica
+
+% https://es.wikipedia.org/wiki/SWI-Prolog
+
+% https://es.wikipedia.org/wiki/Programaci%C3%B3n_declarativa
+
+% https://es.wikipedia.org/wiki/Cl%C3%A1usula_de_Horn
+
+\end{document}
